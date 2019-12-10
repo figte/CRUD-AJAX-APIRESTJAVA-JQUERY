@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Consultas</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  
+</head>
+<body>
+
+    
+
+    <div class="container">
+            <h1 class="text-center">Consulta</h1>
+            <hr>
+                    <div class="form-group row">
+                            <label for="fecha" class="col-md-2 text-center">fecha:</label>
+                            <input id="fecha" class="form-control col-md-10" type="date" >
+                    </div>
+                    <div class="form-group row">
+                            <label for="doctor" class="col-md-2 text-center">doctor:</label>
+                            <input id="doctor" class="form-control col-md-8" type="text" readonly>
+                            <button class="btn btn-secondary col-md-1 ml-2 mt-1 col-sm-11" data-toggle="modal" data-target="#modalDoctores">Buscar</button>
+                    </div>
+                    <div class="form-group row">
+                            <label for="paciente" class="col-md-2 text-center">paciente:</label>
+                            <input id="paciente" class="form-control col-md-8" type="text" readonly>
+                            <button class="btn btn-secondary col-md-1 ml-2 mt-1 col-sm-11 " data-toggle="modal" data-target="#modalPacientes">Buscar</button>
+                    </div>
+
+          <h1 class="text-center">Detalles</h1>
+          <hr>
+          <div class="form-group row">
+                <label for="sintoma" class="col-md-2 text-center">sintoma:</label>
+                <input id="sintoma" class="form-control col-md-8" type="text" >
+                <button id="agregarDetalle" class="btn btn-success col-md-1 ml-2 mt-1 col-sm-11 " >Agregar</button>
+        </div>
+
+        <table class="table">
+            <thead style="background-color: lemonchiffon;">
+                <tr>
+                    <th>sintoma</th>
+                    <th>operacion</th>
+                </tr>
+            </thead>
+            <tbody id="tDetalles">
+
+            </tbody>
+        </table>
+
+        <hr>
+        <div class="form-group row">
+                <label for="diagnostico" class="col-md-2 text-left">diagnostico:</label>
+                <textarea class="form-control" id="diagnostico" cols="30" rows="5"></textarea>
+               
+        </div>
+       <div class="row">
+            <input name="guardar" id="guardar" class="btn btn-primary btn-lg mb-2 mt-2  col-12" type="button" value="Guardar">
+       </div>
+    </div>
+    
+
+    <!-- MODALS -->
+   <!--MODAL PARA BUSCAR DOCTORES  -->
+    <!-- The Modal -->
+        <div class="modal fade" id="modalDoctores">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                  
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title ">Doctores</h4>
+                      <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <table class="table">
+                                <thead>
+                                        <tr>
+                                                <th>ID</th>
+                                                <th>Nombre</th>
+                                                <th>Direccion</th>
+                                                <th>Especialidad</th>
+                                                <th>Operacion</th>
+                                        </tr>
+                                </thead>
+                                <tbody id="tDoctores">
+
+                                </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>
+                    
+                  </div>
+                </div>
+        </div>
+   <!--MODAL PARA BUSCAR PACIENTES  -->
+        <div class="modal fade" id="modalPacientes">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                  
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title ">Pacientes</h4>
+                      <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <table class="table">
+                                <thead>
+                                        <tr>
+                                                <th>ID</th>
+                                                <th>Nombre</th>
+                                                <th>Direccion</th>
+                                                <th>Operacion</th>
+                                        </tr>
+                                </thead>
+                                <tbody id="tPacientes">
+
+                                </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>
+                    
+                  </div>
+                </div>
+        </div>
+  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <script src="js/consultas.js"></script>
+
+</body>
+</html>

@@ -18,7 +18,7 @@ public class Consulta {
 
     private Date fecha;
     
-    private String sintomas;
+    
 
     private String diagnostico;
     
@@ -29,9 +29,8 @@ public class Consulta {
     public Consulta() {
         super();
     }
-    public Consulta(Date fecha, String sintomas, String diagnostico) {
+    public Consulta(Date fecha, String diagnostico) {
     this.fecha=fecha;
-    this.sintomas=sintomas;
     this.diagnostico=diagnostico;
     }
 
@@ -63,18 +62,7 @@ public class Consulta {
         return fecha;
     }
 
-    /**
-     * @param sintomas the sintomas to set
-     */
-    public void setSintomas(String sintomas) {
-        this.sintomas = sintomas;
-    }
-    /**
-     * @return the sintomas
-     */
-    public String getSintomas() {
-        return sintomas;
-    }
+ 
     
     /**
      * @param diagnostico the diagnostico to set

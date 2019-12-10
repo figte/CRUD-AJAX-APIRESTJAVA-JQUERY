@@ -1,20 +1,26 @@
 package com.personal.crud_ajax.controllers;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import com.personal.crud_ajax.models.Consulta;
+import com.personal.crud_ajax.models.DetallesConsulta;
 import com.personal.crud_ajax.services.ConsultaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 /**
  * ConsultaController
@@ -26,6 +32,47 @@ public class ConsultaController {
     @Autowired
     ConsultaService consultaService;
 
+    public static List<DetallesConsulta> detalles=new ArrayList<>();
+
+    public ConsultaController() {
+        detalles=new ArrayList<>();
+    }
+
+
+
+    @PostMapping(value="agregarDetalle", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @CrossOrigin
+    public Object  agregaDetalle(@RequestParam String sintoma) {
+       //creando objeto de detalle y agregandole la data recibida en la peticion
+        DetallesConsulta entity=new DetallesConsulta();
+        entity.setSintoma(sintoma);
+
+        //agregando el onjeto detalle a las lista
+        detalles.add(entity);
+
+        HashMap<String,String> json= new HashMap<String,String>();
+        json.put("mensaje", "Detalle agregado correctamente");
+        json.put("status", "200");
+
+        return  json;
+    }    
+
+    @GetMapping(value="detalles", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @CrossOrigin
+    public Object getDetalles() {
+        return detalles;
+    }
+
+    @PostMapping(value="resetDetalles", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @CrossOrigin
+    public Object resetDetalles() {
+        detalles=new ArrayList<>();
+        return "lista reseteada";
+    }
+    
     //listar registros
     @GetMapping(value="all",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -47,7 +94,7 @@ public class ConsultaController {
            Consulta entity=new Consulta(); //creando objeto 
            //asignando datos al objeto 
             entity.setFecha(fecha);
-            entity.setSintomas(sintomas);
+           // entity.setSintomas(sintomas);
             entity.setDiagnostico(diagnostico);
             entity.setDoctor(consultaService.getDoctor(idDoctor));
            //manejando cualquier excepcion de error
@@ -81,7 +128,7 @@ public class ConsultaController {
            //asignando datos al objeto 
             entity.setId(id);
             entity.setFecha(fecha);
-            entity.setSintomas(sintomas);
+           // entity.setSintomas(sintomas);
             entity.setDiagnostico(diagnostico);
             entity.setDoctor(consultaService.getDoctor(idDoctor));
            //manejando cualquier excepcion de error
