@@ -1,13 +1,18 @@
 package com.personal.crud_ajax.controllers;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import com.personal.crud_ajax.models.Consulta;
 import com.personal.crud_ajax.models.DetallesConsulta;
+import com.personal.crud_ajax.models.Paciente;
+import com.personal.crud_ajax.repositories.IPaciente;
 import com.personal.crud_ajax.services.ConsultaService;
+import com.personal.crud_ajax.services.DoctorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -32,13 +37,50 @@ public class ConsultaController {
     @Autowired
     ConsultaService consultaService;
 
+    @Autowired
+    DoctorService doctorService;
+
+    @Autowired
+    IPaciente pacienteRepository;
+
     public static List<DetallesConsulta> detalles=new ArrayList<>();
+
 
     public ConsultaController() {
         detalles=new ArrayList<>();
     }
 
 
+    @PostMapping(value="getDoctores", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @CrossOrigin
+    public Object getDoctores( ) {
+        //TODO: process POST request
+        return doctorService.getAll();
+    }
+    
+    @GetMapping(value="getPacientes", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @CrossOrigin
+    public Object getPacientes( ) {
+        List<HashMap<String,Object>> registros=new ArrayList<>();
+
+        List<Paciente> l=(List<Paciente>) pacienteRepository.findAll();
+
+        for (Paciente paciente : l) {
+            HashMap<String,Object> object=new HashMap<>();
+            
+            object.put("id", paciente.getId());
+            object.put("nombre", paciente.getNombre());
+            object.put("direccion", paciente.getDireccion());
+            object.put("operacion","<button type='button' class='btn btn-primary agregarPaciente'  data-dismiss='modal'>Agregar</button>");
+               
+            registros.add(object);
+        }
+
+        //TODO: process POST request
+        return Collections.singletonMap("data", registros);
+    }
 
     @PostMapping(value="agregarDetalle", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody

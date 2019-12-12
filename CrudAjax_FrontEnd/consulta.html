@@ -7,7 +7,7 @@
     <title>Consultas</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
 </head>
 <body>
 
@@ -28,7 +28,7 @@
                     <div class="form-group row">
                             <label for="paciente" class="col-md-2 text-center">paciente:</label>
                             <input id="paciente" class="form-control col-md-8" type="text" readonly>
-                            <button class="btn btn-secondary col-md-1 ml-2 mt-1 col-sm-11 " data-toggle="modal" data-target="#modalPacientes">Buscar</button>
+                            <button id="abrirPaciente" class="btn btn-secondary col-md-1 ml-2 mt-1 col-sm-11" data-toggle="modal"  data-target="#modalPacientes" >Buscar</button>
                     </div>
 
           <h1 class="text-center">Detalles</h1>
@@ -115,7 +115,7 @@
                     
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <table class="table">
+                        <table class="table" id="tablePacientes">
                                 <thead>
                                         <tr>
                                                 <th>ID</th>
@@ -142,6 +142,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
     <script src="js/consultas.js"></script>
 
