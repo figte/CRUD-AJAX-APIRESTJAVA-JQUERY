@@ -9,12 +9,14 @@ import java.util.List;
 
 import com.personal.crud_ajax.models.Consulta;
 import com.personal.crud_ajax.models.DetallesConsulta;
+import com.personal.crud_ajax.models.Doctor;
 import com.personal.crud_ajax.models.Paciente;
 import com.personal.crud_ajax.repositories.IPaciente;
 import com.personal.crud_ajax.services.ConsultaService;
 import com.personal.crud_ajax.services.DoctorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -51,14 +53,37 @@ public class ConsultaController {
     }
 
 
-    @PostMapping(value="getDoctores", produces = MediaType.APPLICATION_JSON_VALUE)
+    // @PostMapping(value="getDoctores", produces = MediaType.APPLICATION_JSON_VALUE)
+    // @ResponseBody
+    // @CrossOrigin
+    // public Object getDoctores( ) {
+    //     //TODO: process POST request
+    //     return doctorService.getAll();
+    // }
+    @GetMapping(value="getDoctores", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @CrossOrigin
     public Object getDoctores( ) {
+        List<HashMap<String,Object>> registros=new ArrayList<>();
+
+        List<Doctor> l= doctorService.getAll();
+
+        for (Doctor i : l) {
+            HashMap<String,Object> object=new HashMap<>();
+            
+            object.put("id", i.getId());
+            object.put("nombre", i.getNombre());
+            object.put("direccion", i.getDireccion());
+            object.put("especialidad", i.getEspecialidad().getEspecialidad());
+            object.put("operacion","<button type='button' class='btn btn-primary agregarDoctor'  data-dismiss='modal'>Agregar</button>");
+               
+            registros.add(object);
+        }
+
         //TODO: process POST request
-        return doctorService.getAll();
+        return Collections.singletonMap("data", registros);
     }
-    
+
     @GetMapping(value="getPacientes", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @CrossOrigin
@@ -124,12 +149,13 @@ public class ConsultaController {
     }
 
        //guardar
-       @GetMapping(value="save")
+       @PostMapping(value="save")
        @ResponseBody
-       public HashMap<String,String> save(@RequestParam Date fecha,
-                           @RequestParam String sintomas,
+       @CrossOrigin
+       public HashMap<String,String> save(@RequestParam  @DateTimeFormat(pattern = "yyyy-MM-dd") Date fecha,
                            @RequestParam String diagnostico,
-                           @RequestParam Integer idDoctor) {
+                           @RequestParam Integer idDoctor,
+                           @RequestParam Integer idPaciente) {
          
            HashMap<String,String> jsonReturn=new HashMap<>();
            
@@ -139,8 +165,17 @@ public class ConsultaController {
            // entity.setSintomas(sintomas);
             entity.setDiagnostico(diagnostico);
             entity.setDoctor(consultaService.getDoctor(idDoctor));
+            entity.setPaciente(pacienteRepository.findById(idPaciente).get());
+
+            for (DetallesConsulta detallesConsulta : detalles) {
+                detallesConsulta.setConsulta(entity);
+            }
+            
+            entity.setDetallesConsultas(detalles);
            //manejando cualquier excepcion de error
            try {
+
+
                consultaService.saveOrUpdate(entity); //guardando registro de doctor
    
                jsonReturn.put("estado", "OK");
